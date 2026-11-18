@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "haunted_house",
+  "version": "${version}",
+  "name": "Haunted House MOD",
+  "description": "Explore haunted mansions, use mysterious invitations, and escape the ghost.",
+  "authors": ["HarukiPal"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": { "main": ["com.harukunpal.hauntedhouse.HauntedHouseMod"] },
+  "depends": { "fabricloader": ">=0.18.0", "minecraft": "26.3", "java": ">=25" }
+}
