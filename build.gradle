@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
+    // Minecraft 26.x ships unobfuscated; Loom uses Mojang names directly.
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 }
 
