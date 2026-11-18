@@ -12,6 +12,7 @@ public final class HauntedHouseMod implements ModInitializer {
     @Override
     public void onInitialize() {
         HauntedItems.initialize();
+        HauntedWorldGeneration.initialize();
         LOGGER.info("Haunted House MOD is loading...");
         LOGGER.info("The mansion is waiting in the dark.");
     }
