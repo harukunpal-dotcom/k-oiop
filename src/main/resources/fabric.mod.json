@@ -8,5 +8,5 @@
   "license": "MIT",
   "environment": "*",
   "entrypoints": { "main": ["com.harukunpal.hauntedhouse.HauntedHouseMod"] },
-  "depends": { "fabricloader": ">=0.18.0", "minecraft": "26.3", "java": ">=25" }
+  "depends": { "fabricloader": ">=0.18.0", "minecraft": "26.3", "java": ">=25", "fabric-api": "*" }
 }
