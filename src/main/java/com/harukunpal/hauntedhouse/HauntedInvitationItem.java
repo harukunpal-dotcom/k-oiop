@@ -36,7 +36,7 @@ public final class HauntedInvitationItem extends Item {
         buildMansion(level, origin);
 
         EntityType<?> vexType = BuiltInRegistries.ENTITY_TYPE.get(
-                Identifier.fromNamespaceAndPath("minecraft", "vex"));
+                Identifier.fromNamespaceAndPath("minecraft", "vex")).orElseThrow().value();
         Entity ghost = vexType.create(level, EntitySpawnReason.MOB_SUMMONED);
         if (ghost != null) {
             ghost.setPos(origin.getX() + 4.5, origin.getY() + 2.0, origin.getZ() + 4.5);
