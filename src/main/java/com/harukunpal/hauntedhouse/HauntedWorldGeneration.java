@@ -23,10 +23,13 @@ public final class HauntedWorldGeneration {
     private HauntedWorldGeneration() {}
 
     public static void initialize() {
-        ServerChunkEvents.CHUNK_LOAD.register((world, chunk) -> {
+        ServerChunkEvents.CHUNK_LOAD.register((world, chunk, generated) -> {
+            if (!generated) {
+                return;
+            }
             ChunkPos chunkPos = chunk.getPos();
-            int chunkX = chunkPos.x;
-            int chunkZ = chunkPos.z;
+            int chunkX = chunkPos.x();
+            int chunkZ = chunkPos.z();
 
             // Stable per-chunk roll: loading the same chunk again does not reroll it.
             int roll = Math.floorMod((chunkX * 73428767) ^ (chunkZ * 912931) ^ 0x5F3759DF,
