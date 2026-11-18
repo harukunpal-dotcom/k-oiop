@@ -8,8 +8,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,7 +39,7 @@ public final class HauntedWorldGeneration {
             int z = chunkZ * 16 + 3;
             int y = world.getHeight(Heightmap.Types.WORLD_SURFACE, x + 4, z + 4);
             BlockPos origin = new BlockPos(x, y, z);
-            BlockPos marker = origin.below();
+            BlockPos marker = origin.offset(0, 7, 0);
 
             // A hidden marker prevents rebuilding the same house every time its chunk loads.
             if (!world.getBlockState(marker).isAir()) {
