@@ -1,24 +1,24 @@
 package com.harukunpal.hauntedhouse;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 
 /**
  * Right-click a block with this invitation to build a small haunted mansion
- * and summon a hostile vanilla Vex as the first ghost prototype.
+ * and summon a vanilla Vex as the first ghost prototype.
  */
 public final class HauntedInvitationItem extends Item {
     public HauntedInvitationItem(Properties properties) {
@@ -35,7 +35,9 @@ public final class HauntedInvitationItem extends Item {
         BlockPos origin = context.getClickedPos().relative(context.getClickedFace());
         buildMansion(level, origin);
 
-        Vex ghost = EntityType.VEX.create(level, EntitySpawnReason.MOB_SUMMONED);
+        EntityType<?> vexType = BuiltInRegistries.ENTITY_TYPE.get(
+                Identifier.fromNamespaceAndPath("minecraft", "vex"));
+        Entity ghost = vexType.create(level, EntitySpawnReason.MOB_SUMMONED);
         if (ghost != null) {
             ghost.setPos(origin.getX() + 4.5, origin.getY() + 2.0, origin.getZ() + 4.5);
             ghost.setCustomName(Component.translatable("entity.haunted_house.ghost"));
@@ -43,8 +45,9 @@ public final class HauntedInvitationItem extends Item {
             level.addFreshEntity(ghost);
         }
 
-        level.playSound(null, origin, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 0.55F);
-        context.getPlayer().displayClientMessage(Component.translatable("message.haunted_house.summoned"), true);
+        level.playSound(null, origin, SoundEvents.AMETHYST_BLOCK_CHIME,
+                SoundSource.PLAYERS, 1.0F, 0.55F);
+
         if (context.getPlayer() != null && !context.getPlayer().getAbilities().instabuild) {
             context.getItemInHand().shrink(1);
         }
@@ -55,7 +58,7 @@ public final class HauntedInvitationItem extends Item {
         BlockState floor = Blocks.DARK_OAK_PLANKS.defaultBlockState();
         BlockState wall = Blocks.DARK_OAK_LOG.defaultBlockState();
         BlockState roof = Blocks.DEEPSLATE_BRICKS.defaultBlockState();
-        BlockState glass = Blocks.GRAY_STAINED_GLASS_PANE.defaultBlockState();
+        BlockState glass = Blocks.GLASS.defaultBlockState();
 
         // 9 x 9 floor and roof.
         for (int x = 0; x < 9; x++) {
